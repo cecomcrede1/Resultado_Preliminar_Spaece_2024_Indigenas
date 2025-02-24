@@ -169,32 +169,15 @@ else:
     )
         
     st.markdown("---")
-    # Criar um dicionário para armazenar os resultados de cada componente curricular
-    resultados_por_componente = {}
-    
-    # Processar cada DataFrame de componente curricular
-    for componente in ['LP','MT']:
-        # Calcular quantidade de alunos e média de proficiência
-        df_componente = df_final[df_final["COMPONENTE CURRICULAR"] == componente]
-        resumo = df_componente.agg(
-            quantidade_alunos=("ESTUDANTE", "count"),
-            media_proficiencia=("PROFICIENCIA MÉDIA", "mean")
-        ).to_frame().T
-    
-        # Contar a quantidade de alunos por faixa
-        faixas_counts = df_componente["FAIXAS"].value_counts().to_frame().T
-    
-        # Adicionar o nome do componente curricular
-        resumo["COMPONENTE CURRICULAR"] = componente
-    
-        # Unir as informações
-        resultado_final = resumo.merge(faixas_counts, left_index=True, right_index=True, how="left")
-    
-        # Armazenar no dicionário
-        resultados_por_componente[componente] = resultado_final
-    
-    # Concatenar todos os resultados em um único DataFrame
-    df_resultados_finais = pd.concat(resultados_por_componente.values(), ignore_index=True)
+
+    # Calcular quantidade de alunos e média de proficiência
+    df_LP = df_final[df_final["COMPONENTE CURRICULAR"] == 'LP']
+    prof_med_LP = df_LP["PROFICIENCIA MÉDIA"].mean()
+    st.write(prof_med_LP)
+ 
+    # Contar a quantidade de alunos por faixa
+    faixas_counts = df_componente["FAIXAS"].value_counts()
+
 
     if st.sidebar.button("Sair"):
         st.session_state.clear()
