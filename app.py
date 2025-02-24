@@ -174,10 +174,6 @@ else:
     df_LP = df_final[df_final["COMPONENTE CURRICULAR"] == 'LP']
     prof_med_LP = df_LP["PROFICIENCIA MÉDIA"].mean()
     st.write(prof_med_LP)
- 
-    # Contar a quantidade de alunos por faixa
-    faixas_counts = df_componente["FAIXAS"].value_counts()
-
 
     if st.sidebar.button("Sair"):
         st.session_state.clear()
