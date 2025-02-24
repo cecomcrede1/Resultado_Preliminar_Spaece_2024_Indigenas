@@ -101,16 +101,6 @@ else:
     with col2:
             st.image("banner.png", use_container_width=True)
 
-    # col1, col2, col3 = st.columns([0.3,0.3,0.3])
-    
-    # with col1:
-    #     st.image("logo_governo_preto_SEDUC.png", width=250)
-        
-    # with col2:
-    #     st.image("crede.png", width=300)   
-        
-    # with col3:
-    #     st.image("cecom.png", width=230)
     
     st.markdown('---')
     st.markdown(f"<h3 style='font-family: Kanit; font-size: 20px; font-weight: bold;'>Seja bem-vindo gestor da escola: {escola_usuario}!</h3>", unsafe_allow_html=True)
@@ -179,7 +169,32 @@ else:
     )
         
     st.markdown("---")
-        
+    # Criar um dicionário para armazenar os resultados de cada componente curricular
+    resultados_por_componente = {}
+    
+    # Processar cada DataFrame de componente curricular
+    for componente, df_componente in dfs_componentes.items():
+        # Calcular quantidade de alunos e média de proficiência
+        resumo = df_componente.agg(
+            quantidade_alunos=("ESTUDANTE", "count"),
+            media_proficiencia=("PROFICIENCIA MÉDIA", "mean")
+        ).to_frame().T
+    
+        # Contar a quantidade de alunos por faixa
+        faixas_counts = df_componente["FAIXAS"].value_counts().to_frame().T
+    
+        # Adicionar o nome do componente curricular
+        resumo["COMPONENTE CURRICULAR"] = componente
+    
+        # Unir as informações
+        resultado_final = resumo.merge(faixas_counts, left_index=True, right_index=True, how="left")
+    
+        # Armazenar no dicionário
+        resultados_por_componente[componente] = resultado_final
+    
+    # Concatenar todos os resultados em um único DataFrame
+    df_resultados_finais = pd.concat(resultados_por_componente.values(), ignore_index=True)
+
     if st.sidebar.button("Sair"):
         st.session_state.clear()
         st.rerun()
