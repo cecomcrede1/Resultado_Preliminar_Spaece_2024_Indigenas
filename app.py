@@ -136,7 +136,7 @@ else:
     escola_filtro = df[df["ESCOLA"] == escola_usuario]
  
     # Filtrando turmas
-    df_filtrado_escola = df if escola_filtro == "Todas" else df[df["ESCOLA"] == escola_filtro]
+    df_filtrado_escola = escola_filtro
     turmas_disponiveis = ["Todas"] + sorted(df_filtrado_escola["TURMA"].unique().tolist())
     turma_filtro = st.sidebar.selectbox("Selecione a Turma", turmas_disponiveis)
 
