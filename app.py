@@ -170,11 +170,6 @@ else:
         
     st.markdown("---")
 
-    # Calcular quantidade de alunos e média de proficiência
-    df_LP = df_final[df_final["COMPONENTE CURRICULAR"] == 'LP']
-    prof_med_LP = df_LP["PROFICIENCIA MÉDIA"].mean()
-    st.write(prof_med_LP)
-
     if st.sidebar.button("Sair"):
         st.session_state.clear()
         st.rerun()
