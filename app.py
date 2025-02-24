@@ -38,8 +38,41 @@ st.markdown(
 # AUTENTICAÇÃO
 #-------------------
 #USERS = {"crede01": "0", "aquiraz": "0", "caucaia": "0", "eusebio": "0","guaiuba":"0","itaitinga":"0","maracanau":"0","maranguape":"0","pacatuba":"0"}
-USERS ={"crede01": "x3f7h9", "aquiraz": "p8l2m5", "caucaia": "k4t9y7", "eusebio": "m1n5z8", "guaiuba": "h2v8j6", "itaitinga": "q9w6x4", "maracanau": "r3y7m1", "maranguape": "n5t4v9", "pacatuba": "j8k2h5"}
-MUNICIPIOS = {"crede01": "Crede 01", "aquiraz": "AQUIRAZ", "caucaia": "CAUCAIA", "eusebio": "EUSEBIO", "guaiuba":"GUAIUBA","itaitinga":"ITAITINGA", "maracanau":"MARACANAU", "maranguape":"MARANGUAPE", "pacatuba":"PACATUBA" }
+USERS = {
+    "anace_joaquim": "x3f7h9",
+    "anama_tapeba": "p8l2m5",
+    "chui": "k4t9y7",
+    "ponte": "m1n5z8",
+    "direito_aprender": "h2v8j6",
+    "indios_tapeba": "q9w6x4",
+    "ita_ara": "r3y7m1",
+    "jenipapo_kaninde": "n5t4v9",
+    "marcelino_matos": "j8k2h5",
+    "narcisio_matos": "l5m8y2",
+    "amelia_domingos": "t3v9k7",
+    "capoeira": "w4y8m2",
+    "capuan": "z9x6q3",
+    "trilho": "b5n7r4",
+    "vila_cacos": "y8j2k5"
+}
+
+ESCOLAS = {
+    "anace_joaquim": "ESCOLA INDIGENA ANACE JOAQUIM DA ROCHA FRANCO",
+    "anama_tapeba": "ESCOLA INDIGENA ANAMA TAPEBA",
+    "chui": "ESCOLA INDIGENA CHUI",
+    "ponte": "ESCOLA INDIGENA DA PONTE",
+    "direito_aprender": "ESCOLA INDIGENA DIREITO DE APRENDER DO POVO ANACE",
+    "indios_tapeba": "ESCOLA INDIGENA INDIOS TAPEBA",
+    "ita_ara": "ESCOLA INDIGENA ITA-ARA",
+    "jenipapo_kaninde": "ESCOLA INDIGENA JENIPAPO KANINDE",
+    "marcelino_matos": "ESCOLA INDIGENA MARCELINO ALVES DE MATOS",
+    "narcisio_matos": "ESCOLA INDIGENA NARCISIO FERREIRA MATOS",
+    "amelia_domingos": "ESCOLA INDIGENA TAPEBA AMELIA DOMINGOS",
+    "capoeira": "ESCOLA INDIGENA TAPEBA CAPOEIRA",
+    "capuan": "ESCOLA INDIGENA TAPEBA DE CAPUAN",
+    "trilho": "ESCOLA INDIGENA TAPEBA DO TRILHO",
+    "vila_cacos": "ESCOLA INDIGENA VILA DOS CACOS"
+}
 
 if "authenticated" not in st.session_state:
     st.session_state["authenticated"] = False
@@ -54,13 +87,13 @@ if not st.session_state["authenticated"]:
     password = st.text_input("Senha", type="password")
     if st.button("Entrar"):
         if USERS.get(username) == password:
-            st.session_state.update({"authenticated": True, "username": username, "municipio": MUNICIPIOS.get(username, "Desconhecido")})
+            st.session_state.update({"authenticated": True, "username": username, "escola": ESCOLAS.get(username, "Desconhecido")})
             st.rerun()
         else:
             st.error("Usuário ou senha incorretos!")
 else:
     usuario = st.session_state["username"]
-    municipio_usuario = st.session_state["municipio"]
+    escola_usuario = st.session_state["escola"]
 
     st.sidebar.image("spaece.png", width=250)
     
@@ -80,7 +113,7 @@ else:
     #     st.image("cecom.png", width=230)
     
     st.markdown('---')
-    st.markdown(f"<h3 style='font-family: Kanit; font-size: 20px; font-weight: bold;'>Seja bem-vindo gestor de {municipio_usuario}!</h3>", unsafe_allow_html=True)
+    st.markdown(f"<h3 style='font-family: Kanit; font-size: 20px; font-weight: bold;'>Seja bem-vindo gestor da escola: {escola_usuario}!</h3>", unsafe_allow_html=True)
     
     st.markdown(
         "<h3 style='font-family: Kanit; font-size: 25px; font-weight: normal;'>Baixe aqui os resultados preliminares do SPAECE 2024 organizados por escola, por turma ou por Estudante.</h3>",
@@ -89,21 +122,6 @@ else:
 
     # Adicionar linha divisória
     st.write("---")
-    #-------------------
-    # EXIBIÇÃO DE CÓDIGO CONDICIONAL POR USUÁRIO
-    #-------------------
-    if usuario == "crede01":
-        st.subheader("Visão Administrativa")
-        st.write("Este conteúdo é visível apenas para usuários da CREDE 01.")
-        st.markdown(
-        f"<h3 style='font-family: Kanit; font-size: 20px; font-weight: bold;'>Município: {municipio_usuario}</h3>",
-        unsafe_allow_html=True
-        )
-        
-        st.markdown(
-            f"<h3 style='font-family: Kanit;color: red; font-size: 50px;text-align: left; font-weight: bold;'>Conteúdo Exclusivo!</h3>",
-            unsafe_allow_html=True
-        )
 #-------------------
 # IMPORTA OS DADOS (df)
 #-------------------
@@ -115,19 +133,8 @@ else:
 #-------------------
 # FILTROS ()
 #-------------------
-    # FILTROS ESPECIAIS PARA CREDE01
-    if st.session_state.get("username") == "crede01":
-        municipios_disponiveis = ["Todos"] + sorted(df["MUNICÍPIO"].unique().tolist())
-        municipio_filtro = st.sidebar.selectbox("Selecione o Município", municipios_disponiveis)
-        if municipio_filtro != "Todos":
-            df = df[df["MUNICÍPIO"] == municipio_filtro]
-    else:
-        df = df[df["MUNICÍPIO"] == municipio_usuario]
-    #-------------------
-    # FILTROS GERAIS
-    escolas_disponiveis = ["Todas"] + sorted(df["ESCOLA"].unique().tolist())
-    escola_filtro = st.sidebar.selectbox("Selecione a Escola", escolas_disponiveis)
-
+    escola_filtro = df[df["ESCOLA"] == escola_usuario]
+ 
     # Filtrando turmas
     df_filtrado_escola = df if escola_filtro == "Todas" else df[df["ESCOLA"] == escola_filtro]
     turmas_disponiveis = ["Todas"] + sorted(df_filtrado_escola["TURMA"].unique().tolist())
