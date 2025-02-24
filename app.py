@@ -175,6 +175,7 @@ else:
     # Processar cada DataFrame de componente curricular
     for componente in ['LP','MT']:
         # Calcular quantidade de alunos e média de proficiência
+        df_componente = df_final[df_final["COMPONENTE CURRICULAR"] == componente]
         resumo = df_componente.agg(
             quantidade_alunos=("ESTUDANTE", "count"),
             media_proficiencia=("PROFICIENCIA MÉDIA", "mean")
