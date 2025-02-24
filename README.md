@@ -1,0 +1,1 @@
+# Resultado_Preliminar_Spaece_2024_Indigenas
