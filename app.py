@@ -196,11 +196,6 @@ else:
     col2.metric(label="Avaliados", value=avaliados)
     col3.metric(label="Não Avaliados", value=n_avaliados)
 
-    st.markdown(
-        "<h3 style='font-family: Kanit; font-size: 18px; font-weight: bold;'>Estudantes por faixa de desempenho:</h3>",
-        unsafe_allow_html=True
-    )    
-    
     # Definir a ordem desejada das faixas
     ordem_faixas = [
         "MUITO CRÍTICO", "CRÍTICO", "BÁSICO", "SUFICIENTE", 
