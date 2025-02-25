@@ -166,9 +166,9 @@ else:
     )
     
     avaliados = df_final[df_final['AVALIADO'] == 'SIM']['ESTUDANTE'].nunique()
-    st.write(f'Quantidade de alunos avaliados: {avaliados}')
-    
     n_avaliados = df_final[df_final['AVALIADO'] == 'NÃO']['ESTUDANTE'].nunique()
+    st.write(f'Quantidade total de alunos: {avaliados+n_avaliados}')
+    st.write(f'Quantidade de alunos avaliados: {avaliados}')
     st.write(f'Quantidade de alunos **não** avaliados: {n_avaliados}')
     
     # Converter DataFrame para Excel em memória
