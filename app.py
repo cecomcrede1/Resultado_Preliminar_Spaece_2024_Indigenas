@@ -232,9 +232,7 @@ else:
                  color="Faixa")  # Adiciona cores diferentes para cada faixa
     
     fig.update_traces(textposition="outside")  # Exibir valores fora das barras
-    
-    # Exibir no Streamlit
-    st.title("Distribuição de Estudantes por Faixa")
+
     st.plotly_chart(fig)
 
     if st.sidebar.button("Sair"):
