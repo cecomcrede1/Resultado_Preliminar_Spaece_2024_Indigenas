@@ -202,20 +202,19 @@ else:
     # Contar a quantidade de estudantes únicos para cada faixa (somente os avaliados "SIM")
     faixa_counts = df_final[df_final['AVALIADO'] == 'SIM'].groupby('FAIXAS')['ESTUDANTE'].nunique()
     
-    # Reorganizar os dados conforme a ordem desejada, preenchendo com 0 caso falte alguma faixa
-    faixa_counts = pd.Series({faixa: faixa_counts.get(faixa, 0) for faixa in ordem_faixas})
+    # Reorganizar os dados conforme a ordem desejada, removendo faixas com valor 0
+    faixa_counts = {faixa: faixa_counts.get(faixa, 0) for faixa in ordem_faixas}
+    faixa_counts = {faixa: count for faixa, count in faixa_counts.items() if count > 0}  # Remove os zeros
     
     # Criar a interface no Streamlit
     st.title("Distribuição de Estudantes por Faixa")
     
-    # Criar colunas dinamicamente
-    cols = st.columns(len(ordem_faixas))
+    # Criar colunas dinamicamente com as faixas filtradas
+    cols = st.columns(len(faixa_counts))
     
     # Exibir cada faixa na ordem definida
     for col, (faixa, count) in zip(cols, faixa_counts.items()):
         col.metric(label=faixa, value=count)
-
-
 
     if st.sidebar.button("Sair"):
         st.session_state.clear()
