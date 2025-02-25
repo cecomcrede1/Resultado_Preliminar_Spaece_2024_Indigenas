@@ -160,6 +160,11 @@ else:
     st.dataframe(data=df_final,hide_index=True)
 
     #RESUMO
+    st.markdown(
+        "<h3 style='font-family: Kanit; font-size: 25px; font-weight: bold;'>RESUMO</h3>",
+        unsafe_allow_html=True
+    )
+    
     avaliados = df_final[df_final['AVALIADO'] == 'SIM']['ESTUDANTE'].nunique()
     st.write(f'Quantidade de alunos avaliados: {avaliados}')
     
