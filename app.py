@@ -193,16 +193,25 @@ else:
     col2.metric(label="Avaliados", value=avaliados)
     col3.metric(label="Não Avaliados", value=n_avaliados)
 
+    # Definir a ordem desejada das faixas
+    ordem_faixas = [
+        "MUITO CRÍTICO", "CRÍTICO", "BÁSICO", "SUFICIENTE", 
+        "INTERMEDIÁRIO", "ADEQUADO", "DESEJÁVEL", "PROFICIENTE", "AVANÇADO"
+    ]
+    
     # Contar a quantidade de estudantes únicos para cada faixa (somente os avaliados "SIM")
     faixa_counts = df_final[df_final['AVALIADO'] == 'SIM'].groupby('FAIXAS')['ESTUDANTE'].nunique()
+    
+    # Reorganizar os dados conforme a ordem desejada, preenchendo com 0 caso falte alguma faixa
+    faixa_counts = pd.Series({faixa: faixa_counts.get(faixa, 0) for faixa in ordem_faixas})
     
     # Criar a interface no Streamlit
     st.title("Distribuição de Estudantes por Faixa")
     
     # Criar colunas dinamicamente
-    cols = st.columns(len(faixa_counts))
+    cols = st.columns(len(ordem_faixas))
     
-    # Exibir cada faixa em uma coluna
+    # Exibir cada faixa na ordem definida
     for col, (faixa, count) in zip(cols, faixa_counts.items()):
         col.metric(label=faixa, value=count)
 
