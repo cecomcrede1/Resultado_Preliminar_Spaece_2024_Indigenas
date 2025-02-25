@@ -206,6 +206,19 @@ else:
         "MUITO CRÍTICO", "CRÍTICO", "BÁSICO", "SUFICIENTE", 
         "INTERMEDIÁRIO", "ADEQUADO", "DESEJÁVEL", "PROFICIENTE", "AVANÇADO"
     ]
+
+    # Definir cores personalizadas para cada faixa
+    cores_faixas = {
+        "MUITO CRÍTICO": "#D32F2F",   # Vermelho escuro
+        "CRÍTICO": "#F44336",         # Vermelho
+        "BÁSICO": "#FF9800",          # Laranja
+        "SUFICIENTE": "#FFEB3B",      # Amarelo
+        "INTERMEDIÁRIO": "#4CAF50",   # Verde médio
+        "ADEQUADO": "#388E3C",        # Verde escuro
+        "DESEJÁVEL": "#2196F3",       # Azul
+        "PROFICIENTE": "#3F51B5",     # Azul escuro
+        "AVANÇADO": "#673AB7"         # Roxo
+    }
     
     # Contar a quantidade de estudantes únicos para cada faixa (somente os avaliados "SIM")
     faixa_counts = df_final[df_final['AVALIADO'] == 'SIM'].groupby('FAIXAS')['ESTUDANTE'].nunique()
@@ -229,7 +242,8 @@ else:
     fig = px.bar(df_faixas, x="Faixa", y="Quantidade", text="Quantidade",
                  title="Distribuição de Estudantes por Faixa",
                  labels={"Faixa": "Faixa de Proficiência", "Quantidade": "Número de Estudantes"},
-                 color="Faixa")  # Adiciona cores diferentes para cada faixa
+                 color="Faixa",
+                 color_discrete_map=cores_faixas) # Adiciona cores diferentes para cada faixa
     
     fig.update_traces(textposition="outside")  # Exibir valores fora das barras
 
