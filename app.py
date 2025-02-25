@@ -183,7 +183,7 @@ else:
     )
 
     st.markdown(
-        "<h3 style='font-family: Kanit; font-size: 18px; font-weight: bold;'>Proficiência Média:</h3>",
+        "<h3 style='font-family: Kanit; font-size: 18px; font-weight: bold;'>Média das proficiências dos alunos presentes:</h3>",
         unsafe_allow_html=True
     )
     
@@ -194,9 +194,9 @@ else:
     df_unicos = df_avaliados.drop_duplicates(subset=['ESTUDANTE'])
     
     # Calcular a média das proficiências
-    media_proficiencia = df_unicos['PROFICIENCIA MÉDIA'].astype(float).mean()
+    media_proficiencia = round(df_unicos['PROFICIENCIA MÉDIA'].astype(float).mean(),0)
 
-    st.metric(label="", value=media_proficiencia)
+    st.metric(label="Proficiência Média", value=media_proficiencia)
     
     st.markdown(
         "<h3 style='font-family: Kanit; font-size: 18px; font-weight: bold;'>Frequência:</h3>",
