@@ -144,8 +144,6 @@ else:
     componentes_disponiveis = ["Todos"] + sorted(df_filtrado_turma["COMPONENTE CURRICULAR"].unique().tolist())
     componente_filtro = st.sidebar.selectbox("Selecione o Componente Curricular", componentes_disponiveis)
 
-
-
     # Botão para aplicar os filtros
     #if st.sidebar.button("Aplicar Filtros"):
     # Aplicando todos os filtros
@@ -223,6 +221,21 @@ else:
     # Exibir cada faixa na ordem definida
     for col, (faixa, count) in zip(cols, faixa_counts.items()):
         col.metric(label=faixa, value=count)
+
+    # Criar DataFrame para o gráfico
+    df_faixas = pd.DataFrame(list(faixa_counts.items()), columns=["Faixa", "Quantidade"])
+    
+    # Criar gráfico de barras
+    fig = px.bar(df_faixas, x="Faixa", y="Quantidade", text="Quantidade",
+                 title="Distribuição de Estudantes por Faixa",
+                 labels={"Faixa": "Faixa de Proficiência", "Quantidade": "Número de Estudantes"},
+                 color="Faixa")  # Adiciona cores diferentes para cada faixa
+    
+    fig.update_traces(textposition="outside")  # Exibir valores fora das barras
+    
+    # Exibir no Streamlit
+    st.title("Distribuição de Estudantes por Faixa")
+    st.plotly_chart(fig)
 
     if st.sidebar.button("Sair"):
         st.session_state.clear()
