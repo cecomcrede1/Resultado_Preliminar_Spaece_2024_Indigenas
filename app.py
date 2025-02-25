@@ -219,8 +219,8 @@ else:
     cols = st.columns(len(faixa_counts))
     
     # Exibir cada faixa na ordem definida
-    for col, (faixa, count) in zip(cols, faixa_counts.items()):
-        col.metric(label=faixa, value=count)
+    #for col, (faixa, count) in zip(cols, faixa_counts.items()):
+    #    col.metric(label=faixa, value=count)
 
     # Criar DataFrame para o gráfico
     df_faixas = pd.DataFrame(list(faixa_counts.items()), columns=["Faixa", "Quantidade"])
