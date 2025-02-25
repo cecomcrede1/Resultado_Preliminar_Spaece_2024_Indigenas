@@ -159,7 +159,7 @@ else:
     
     st.dataframe(data=df_final,hide_index=True)
 
-    avaliados = df[df['AVALIADO'] == 'SIM']['ESTUDANTE'].nunique()
+    avaliados = df_final[df_final['AVALIADO'] == 'SIM']['ESTUDANTE'].nunique()
 
     st.write(avaliados)
     
