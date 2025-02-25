@@ -181,7 +181,7 @@ else:
     )
 
     st.markdown(
-        "<h3 style='font-family: Kanit; font-size: 18px; font-weight: bold;'>Frequẽncia:</h3>",
+        "<h3 style='font-family: Kanit; font-size: 18px; font-weight: bold;'>Frequência:</h3>",
         unsafe_allow_html=True
     )
 
