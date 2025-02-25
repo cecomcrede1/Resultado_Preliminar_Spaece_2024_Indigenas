@@ -124,6 +124,8 @@ else:
 # FILTROS ()
 #-------------------
     df_filtrado_escola = df[df["ESCOLA"] == escola_usuario]
+
+    st.dataframe(data=df_filtrado_escola)
  
     # Filtrando turmas
     turmas_disponiveis = ["Todas"] + sorted(df_filtrado_escola["TURMA"].unique().tolist())
