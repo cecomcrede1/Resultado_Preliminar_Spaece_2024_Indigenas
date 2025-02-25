@@ -193,9 +193,20 @@ else:
     col2.metric(label="Avaliados", value=avaliados)
     col3.metric(label="Não Avaliados", value=n_avaliados)
 
-    st.write(f'Quantidade total de alunos: {avaliados+n_avaliados}')
-    st.write(f'Quantidade de alunos avaliados: {avaliados}')
-    st.write(f'Quantidade de alunos **não** avaliados: {n_avaliados}')
+    # Contar a quantidade de estudantes únicos para cada faixa (somente os avaliados "SIM")
+    faixa_counts = df_final[df_final['AVALIADO'] == 'SIM'].groupby('FAIXAS')['ESTUDANTE'].nunique()
+    
+    # Criar a interface no Streamlit
+    st.title("Distribuição de Estudantes por Faixa")
+    
+    # Criar colunas dinamicamente
+    cols = st.columns(len(faixa_counts))
+    
+    # Exibir cada faixa em uma coluna
+    for col, (faixa, count) in zip(cols, faixa_counts.items()):
+        col.metric(label=faixa, value=count)
+
+
 
     if st.sidebar.button("Sair"):
         st.session_state.clear()
