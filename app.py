@@ -178,12 +178,21 @@ else:
     
     #RESUMO
     st.markdown(
-        "<h3 style='font-family: Kanit; font-size: 25px; font-weight: bold;'>RESUMO</h3>",
+        "<h3 style='font-family: Kanit; font-size: 20px; font-weight: bold;'>RESUMO</h3>",
         unsafe_allow_html=True
     )
-    
+
     avaliados = df_final[df_final['AVALIADO'] == 'SIM']['ESTUDANTE'].nunique()
     n_avaliados = df_final[df_final['AVALIADO'] == 'NÃO']['ESTUDANTE'].nunique()
+    
+    # Criar três colunas
+    col1, col2, col3 = st.columns(3)
+
+    # Exibir os dados nas colunas
+    col1.metric(label="Total de Estudantes", value=avaliados+n_avaliados)
+    col2.metric(label="Avaliados (SIM)", value=avaliados)
+    col3.metric(label="Não Avaliados", value=n_avaliados)
+
     st.write(f'Quantidade total de alunos: {avaliados+n_avaliados}')
     st.write(f'Quantidade de alunos avaliados: {avaliados}')
     st.write(f'Quantidade de alunos **não** avaliados: {n_avaliados}')
