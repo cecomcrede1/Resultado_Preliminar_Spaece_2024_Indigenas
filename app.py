@@ -190,7 +190,7 @@ else:
 
     # Exibir os dados nas colunas
     col1.metric(label="Total de Estudantes", value=avaliados+n_avaliados)
-    col2.metric(label="Avaliados (SIM)", value=avaliados)
+    col2.metric(label="Avaliados", value=avaliados)
     col3.metric(label="Não Avaliados", value=n_avaliados)
 
     st.write(f'Quantidade total de alunos: {avaliados+n_avaliados}')
