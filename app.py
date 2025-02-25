@@ -158,6 +158,10 @@ else:
     ].copy()
     
     st.dataframe(data=df_final,hide_index=True)
+
+    avaliados = df[df['AVALIADO'] == 'SIM']['ESTUDANTE'].nunique()
+
+    st.write(avaliados)
     
     # Converter DataFrame para Excel em memória
     output = io.BytesIO()
