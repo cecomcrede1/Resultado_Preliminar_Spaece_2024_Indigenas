@@ -181,6 +181,22 @@ else:
     )
 
     st.markdown(
+        "<h3 style='font-family: Kanit; font-size: 18px; font-weight: bold;'>Proficiência Média:</h3>",
+        unsafe_allow_html=True
+    )
+    
+    # Filtrar apenas os estudantes avaliados
+    df_avaliados = df_final[df_final['AVALIADO'] == 'SIM']
+    
+    # Remover duplicatas de estudantes para considerar apenas um registro por estudante
+    df_unicos = df_avaliados.drop_duplicates(subset=['ESTUDANTE'])
+    
+    # Calcular a média das proficiências
+    media_proficiencia = df_unicos['PROFICIENCIA MÉDIA'].astype(float).mean()
+
+    st.metric(label="Proficiência Média", value=media_proficiencia)
+    
+    st.markdown(
         "<h3 style='font-family: Kanit; font-size: 18px; font-weight: bold;'>Frequência:</h3>",
         unsafe_allow_html=True
     )
