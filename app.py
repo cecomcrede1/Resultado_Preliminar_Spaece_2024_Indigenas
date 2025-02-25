@@ -194,7 +194,7 @@ else:
     df_unicos = df_avaliados.drop_duplicates(subset=['ESTUDANTE'])
     
     # Calcular a média das proficiências
-    media_proficiencia = round(df_unicos['PROFICIENCIA MÉDIA'].astype(float).mean(),0)
+    media_proficiencia = int(df_unicos['PROFICIENCIA MÉDIA'].astype(float).mean())
 
     st.metric(label="Proficiência Média", value=media_proficiencia)
     
