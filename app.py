@@ -182,6 +182,11 @@ else:
         unsafe_allow_html=True
     )
 
+    st.markdown(
+        "<h3 style='font-family: Kanit; font-size: 18px; font-weight: bold;'>Frequẽncia:</h3>",
+        unsafe_allow_html=True
+    )
+
     avaliados = df_final[df_final['AVALIADO'] == 'SIM']['ESTUDANTE'].nunique()
     n_avaliados = df_final[df_final['AVALIADO'] == 'NÃO']['ESTUDANTE'].nunique()
     
@@ -193,6 +198,11 @@ else:
     col2.metric(label="Avaliados", value=avaliados)
     col3.metric(label="Não Avaliados", value=n_avaliados)
 
+    st.markdown(
+        "<h3 style='font-family: Kanit; font-size: 18px; font-weight: bold;'>Estudantes por faixa de desempenho:</h3>",
+        unsafe_allow_html=True
+    )    
+    
     # Definir a ordem desejada das faixas
     ordem_faixas = [
         "MUITO CRÍTICO", "CRÍTICO", "BÁSICO", "SUFICIENTE", 
@@ -206,8 +216,6 @@ else:
     faixa_counts = {faixa: faixa_counts.get(faixa, 0) for faixa in ordem_faixas}
     faixa_counts = {faixa: count for faixa, count in faixa_counts.items() if count > 0}  # Remove os zeros
     
-    # Criar a interface no Streamlit
-    st.title("Distribuição de Estudantes por Faixa")
     
     # Criar colunas dinamicamente com as faixas filtradas
     cols = st.columns(len(faixa_counts))
